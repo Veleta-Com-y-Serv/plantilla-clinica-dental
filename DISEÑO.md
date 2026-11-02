@@ -49,3 +49,8 @@ con cuatro columnas y la ficha menta «Pedir cita».
 De `veterinaria`: nada de bandas con esquinas que se solapan ni chapas redondas ni coral; hero partido en vez de foto
 con velo. De las demás: la sonrisa bajo el título, la rejilla de tratamientos por categoría con líneas finas y la
 paleta blanco + cielo + menta.
+
+## Páginas propias (fichas)
+Con la misma piel que la portada: cabecera y pie de la plantilla, migas (Inicio › Sección › Elemento), hero con la foto del
+elemento (sin foto, su icono), `detalle` en párrafos, tabla de datos, caja de contacto, galería (`imagenes`) y otros elementos
+de la misma lista.

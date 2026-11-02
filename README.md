@@ -31,3 +31,7 @@ npx astro preview
 ```
 
 Fotos: `fotos.json` (las genera el paso de fotos); respaldo en `public/placeholders/`.
+
+## Páginas propias
+- Cada elemento de `secciones.tratamientos.tratamientos` con `detalle` tiene su página en `/tratamientos/<slug>/` (`src/pages/[coleccion]/[slug].astro`).
+- Campos opcionales de los elementos con ficha: `detalle` (párrafos separados por una línea en blanco), `slug` e `imagenes` («/fotos/a.jpg; /fotos/b.jpg»).

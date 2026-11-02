@@ -55,16 +55,75 @@ secciones:
     titulo: Todo lo que tu boca necesita, en un mismo sitio
     texto: "Precios orientativos con IVA incluido. Antes de empezar te damos el presupuesto cerrado y por escrito, sin letra pequeña."
     tratamientos:   # se agrupan por `categoria` en el orden en que aparecen
-      - { nombre: Revisión y diagnóstico, texto: "Exploración completa, fotos y radiografía si hace falta. Te explicamos lo que vemos.", precio: Gratis, duracion: 30 min, categoria: Prevención, icono: diente }
-      - { nombre: Limpieza dental, texto: "Limpieza con ultrasonidos y pulido para quitar sarro y manchas.", precio: "desde 45 €", duracion: 40 min, categoria: Prevención, icono: cepillo }
+      - nombre: Revisión y diagnóstico
+        texto: "Exploración completa, fotos y radiografía si hace falta. Te explicamos lo que vemos."
+        precio: Gratis
+        duracion: 30 min
+        categoria: Prevención
+        icono: diente
+        imagenes: "/fotos/primera-visita.jpg; /fotos/galeria-2.jpg"
+        detalle: |
+          La revisión es la primera conversación con tu boca, y aquí no tiene prisa. Empezamos preguntándote cómo estás: si algo te molesta, si te sangran las encías al cepillarte, si notas sensibilidad con el frío o si hace tiempo que no vas al dentista. Con eso sabemos dónde mirar con más calma.
+
+          Después revisamos pieza a pieza, las encías y la mordida. Si hace falta, hacemos fotos y una radiografía digital para ver lo que no se aprecia a simple vista, como una caries entre dos muelas o el estado de un empaste antiguo. Todo lo que vemos te lo enseñamos en la pantalla y te lo explicamos sin tecnicismos.
+
+          Al terminar sales con un plan claro: qué conviene tratar ya, qué puede esperar y qué basta con vigilar en la próxima visita. Si necesitas algún tratamiento, te damos el presupuesto cerrado y por escrito para que lo pienses en casa. Y si todo está bien, te lo decimos igual de claro y te recordamos cuándo volver.
+      - nombre: Limpieza dental
+        texto: "Limpieza con ultrasonidos y pulido para quitar sarro y manchas."
+        precio: "desde 45 €"
+        duracion: 40 min
+        categoria: Prevención
+        icono: cepillo
+        detalle: |
+          Por mucho que te cepilles, con el tiempo se forma sarro en los rincones a los que el cepillo no llega: detrás de los incisivos de abajo, entre las muelas y justo en el borde de la encía. Ese sarro irrita la encía, hace que sangre y, si se deja, acaba aflojando los dientes.
+
+          En la limpieza, nuestra higienista lo retira con ultrasonidos, que vibran y lo despegan sin rayar el esmalte. Luego pulimos cada diente para quitar las manchas de café, té o tabaco y dejar la superficie lisa, de forma que la placa se pegue menos. Si tienes los dientes sensibles, vamos más despacio y podemos aplicar un gel que calma la molestia.
+
+          Aprovechamos para revisar cómo te cepillas y te enseñamos a usar el hilo o los cepillos interdentales que mejor te vayan. Te vas con la boca fresca, las encías más tranquilas y una idea clara de cuándo te toca la siguiente limpieza.
       - { nombre: Odontopediatría, texto: "Primeras visitas, selladores y flúor para los más pequeños, con calma y en su idioma.", precio: "desde 30 €", duracion: 30 min, categoria: Prevención, icono: nino }
-      - { nombre: Blanqueamiento, texto: "Blanqueamiento en clínica con luz fría y férulas para mantenerlo en casa.", precio: "desde 290 €", duracion: 90 min, categoria: Estética, icono: chispa }
+      - nombre: Blanqueamiento
+        texto: "Blanqueamiento en clínica con luz fría y férulas para mantenerlo en casa."
+        precio: "desde 290 €"
+        duracion: 90 min
+        categoria: Estética
+        icono: chispa
+        imagenes: "/fotos/hero.jpg"
+        detalle: |
+          Antes de blanquear, revisamos que tu boca esté sana: el blanqueamiento no se hace sobre caries ni con las encías inflamadas, y los empastes y coronas no cambian de color. Por eso te contamos de antemano qué resultado puedes esperar y si conviene hacer antes una limpieza.
+
+          La sesión en clínica se hace con un gel blanqueador y luz fría, que activa el producto sin calentar el diente. Protegemos las encías y los labios para que el gel solo toque el esmalte, y vamos comprobando el tono durante la sesión. Puedes escuchar música o simplemente descansar en el sillón.
+
+          Para que el resultado dure, te hacemos unas férulas a medida que te llevas a casa con su gel, y te explicamos cuándo y cuánto tiempo usarlas. Los primeros días puede aparecer algo de sensibilidad, que desaparece sola. También te damos una lista sencilla de lo que conviene evitar al principio, como el café o el vino tinto, para que el blanco se mantenga más tiempo.
       - { nombre: Carillas, texto: "Carillas de composite o porcelana para cambiar forma y color.", precio: "desde 350 € por pieza", duracion: 2 sesiones, categoria: Estética, icono: diente }
       - { nombre: Empastes estéticos, texto: "Resinas del color de tu diente, sin metal.", precio: "desde 50 €", duracion: 45 min, categoria: Estética, icono: chispa }
-      - { nombre: Alineadores transparentes, texto: "Ortodoncia invisible con escáner 3D: ves el resultado antes de empezar.", precio: "desde 89 €/mes", duracion: 6 a 18 meses, categoria: Ortodoncia, icono: escaner }
+      - nombre: Alineadores transparentes
+        texto: "Ortodoncia invisible con escáner 3D: ves el resultado antes de empezar."
+        precio: "desde 89 €/mes"
+        duracion: 6 a 18 meses
+        categoria: Ortodoncia
+        icono: escaner
+        imagenes: "/fotos/galeria-3.jpg; /fotos/tecnologia.jpg"
+        detalle: |
+          Los alineadores son fundas transparentes, hechas a medida, que mueven los dientes poco a poco. Se quitan para comer y para cepillarte, así que no cambian tu dieta ni tu higiene, y apenas se notan cuando hablas o sonríes.
+
+          Todo empieza con el escáner 3D: en un par de minutos tenemos tu boca en la pantalla, sin pastas de molde. Con ese modelo, el ortodoncista planifica el movimiento de cada diente y te enseña una simulación del resultado final antes de empezar. Si te convence, encargamos tus alineadores y te explicamos cómo ponértelos y cuántas horas al día debes llevarlos.
+
+          Cada cierto tiempo cambias a un juego nuevo y vienes a revisión para comprobar que todo avanza según lo previsto. Al terminar te damos un retenedor para que los dientes no vuelvan a moverse. El tratamiento se paga en cuotas mensuales y el presupuesto incluye todas las fases, las revisiones y el retenedor, sin sorpresas al final.
       - { nombre: Brackets estéticos, texto: "Brackets de zafiro o cerámica que apenas se ven.", precio: "desde 59 €/mes", duracion: 12 a 24 meses, categoria: Ortodoncia, icono: brackets }
       - { nombre: Ortodoncia infantil, texto: "Aparatos para guiar el crecimiento de la boca entre los 6 y los 12 años.", precio: Consultar, duracion: Según el caso, categoria: Ortodoncia, icono: nino }
-      - { nombre: Implante dental, texto: "Implante de titanio con corona, con cirugía guiada y anestesia local.", precio: "desde 690 €", duracion: 3 a 6 meses, categoria: Implantes y cirugía, icono: implante }
+      - nombre: Implante dental
+        texto: "Implante de titanio con corona, con cirugía guiada y anestesia local."
+        precio: "desde 690 €"
+        duracion: 3 a 6 meses
+        categoria: Implantes y cirugía
+        icono: implante
+        imagenes: "/fotos/galeria-2.jpg; /fotos/galeria-1.jpg"
+        detalle: |
+          Un implante sustituye la raíz de un diente perdido por una pieza de titanio que se integra en el hueso. Encima se coloca una corona hecha a medida, del color de tus dientes, que muerdes y cepillas como uno más. No hay que tocar los dientes de al lado, como pasa con un puente.
+
+          Primero estudiamos el caso con radiografía y escáner 3D para ver cuánto hueso hay y dónde está cada estructura. Con esa información planificamos la cirugía guiada, que permite colocar el implante en la posición exacta con una intervención más corta y cómoda. Se hace con anestesia local, así que no duele; los días siguientes puede haber molestias leves que se controlan con analgésicos normales.
+
+          Después hay que esperar a que el implante se una al hueso. Mientras tanto, si la pieza se ve al sonreír, te ponemos un diente provisional. Cuando está listo, tomamos medidas y colocamos la corona definitiva, hecha en laboratorio. El presupuesto que firmas incluye todas las fases, de la primera prueba a la corona.
       - { nombre: Endodoncia, texto: "Tratamiento de conductos con microscopio para salvar el diente.", precio: "desde 180 €", duracion: 60 a 90 min, categoria: Implantes y cirugía, icono: microscopio }
       - { nombre: Prótesis, texto: "Prótesis fijas y removibles hechas a medida en laboratorio de Almería.", precio: "desde 450 €", duracion: 3 a 4 sesiones, categoria: Implantes y cirugía, icono: sillon }
 
