@@ -1,0 +1,56 @@
+---
+// Cabecera fija a todo el ancho, siempre sólida y translúcida: marca (diente blanco en cuadrado azul con el nombre),
+// menú, teléfono (desde 1280 px) y botón de cita. En móvil, menú plegable sin JavaScript (<details>).
+import { site, tel } from '../data/site';
+import type { Enlace } from '../data/site';
+import Icono from './ui/Icono.astro';
+interface Props { variante?: string; cta?: Enlace | null }
+const { variante = 'luz', cta = null } = Astro.props;
+const telefono = site.contacto.telefono;
+---
+
+<header class={`cabecera cabecera--${variante}`}>
+  <div class="contenedor cabecera-fila">
+    <a href="/" class="marca" aria-label={`${site.nombre}, inicio`}>
+      {
+        site.logo ? (
+          <img src={site.logo} alt={site.nombre} class="marca-logo" width="160" height="40" />
+        ) : (
+          <>
+            <span class="marca-inicial" aria-hidden="true"><Icono nombre="diente" tam={22} /></span>
+            <span class="marca-nombre">{site.nombre}</span>
+          </>
+        )
+      }
+    </a>
+    <nav class="cabecera-nav" aria-label="Menú principal">
+      {site.menu.map((e) => <a href={e.url}>{e.texto}</a>)}
+    </nav>
+    {telefono && (
+      <a href={tel(telefono)} class="cabecera-tel">
+        <Icono nombre="telefono" tam={18} /> {telefono}
+      </a>
+    )}
+    {cta && cta.url && <a href={cta.url} class="btn cabecera-cta">{cta.texto}</a>}
+    {
+      (site.menu.length > 0 || (cta && cta.url)) && (
+        <details class="menu-movil">
+          <summary>
+            <span class="menu-movil-icono" aria-hidden="true" />
+            <span>Menú</span>
+          </summary>
+          <nav class="menu-movil-panel" aria-label="Menú">
+            {site.menu.map((e) => <a href={e.url}>{e.texto}</a>)}
+            {telefono && <a href={tel(telefono)}>Llamar al {telefono}</a>}
+            {cta && cta.url && <a href={cta.url} class="btn">{cta.texto}</a>}
+          </nav>
+        </details>
+      )
+    }
+  </div>
+</header>
+<script is:inline>
+  document.querySelectorAll('.menu-movil a').forEach(function (a) {
+    a.addEventListener('click', function () { a.closest('details').open = false; });
+  });
+</script>

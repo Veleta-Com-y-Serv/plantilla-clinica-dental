@@ -1,0 +1,141 @@
+/* Clínica dental — estilo limpio, concepto «sala con luz»: bandas planas a todo el ancho que alternan blanco, cielo
+   muy pálido, azul cielo pleno, menta y un azul noche para los apartados técnicos; mucho aire, sans redondeada de
+   sistema, esquinas de 1 rem en todo, antetítulos con un punto y una línea menta, y la última palabra de cada título
+   con una «sonrisa» (un arco menta debajo). Hero partido 50/50 con la foto a sangre a la derecha; fotos rectas con
+   esquinas de 1 rem y franjas de fotos de borde a borde.
+   Todo sale de las cuatro variables de color de site.yaml (--c-primario, --c-acento, --c-fondo, --c-texto). */
+@import "tailwindcss";
+@import "./comun.css";
+@config "../../tailwind.config.mjs";
+
+:root {
+  --fuente-texto: ui-rounded, "SF Pro Rounded", "Nunito", "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, sans-serif;
+  --fuente-titulos: ui-rounded, "SF Pro Rounded", "Nunito", "Arial Rounded MT Bold", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --ancho: 90rem;
+  --radio: 1rem;
+  /* Derivados de los cuatro colores del cliente */
+  --tinta: color-mix(in srgb, var(--c-texto) 90%, #000);
+  --noche: color-mix(in srgb, var(--c-primario) 38%, color-mix(in srgb, var(--c-texto) 78%, #000));
+  --cielo: color-mix(in srgb, var(--c-primario) 8%, var(--c-fondo));
+  --cielo-2: color-mix(in srgb, var(--c-primario) 16%, var(--c-fondo));
+  --menta: color-mix(in srgb, var(--c-acento) 16%, var(--c-fondo));
+  --linea: color-mix(in srgb, var(--c-texto) 12%, transparent);
+  --pad: clamp(4rem, 8vw, 7.5rem);
+}
+
+@layer base {
+  html { scroll-padding-top: 5.5rem; }
+  body { font-family: var(--fuente-texto); font-size: 1.0625rem; line-height: 1.7; background: var(--c-fondo); }
+  h1, h2, h3 { font-family: var(--fuente-titulos); font-weight: 800; letter-spacing: -0.025em; line-height: 1.06; }
+  h3 { letter-spacing: -0.01em; line-height: 1.25; }
+}
+
+@layer components {
+  /* ── Bandas planas a todo el ancho ─────────────────────────────────────── */
+  .banda { position: relative; isolation: isolate; overflow: clip; padding-block: var(--pad); background: var(--c-fondo); color: var(--c-texto); }
+  .tono-claro { background: var(--c-fondo); color: var(--c-texto); }
+  .tono-cielo { background: var(--cielo); color: var(--c-texto); }
+  .tono-menta { background: var(--menta); color: var(--c-texto); }
+  .tono-primario { background: var(--c-primario); color: #fff; }
+  .tono-acento { background: var(--c-acento); color: var(--tinta); }
+  .tono-noche { background: var(--noche); color: #fff; }
+  /* Luz: un halo suave en una esquina de las bandas claras */
+  .tono-cielo::before, .tono-menta::before { content: ""; position: absolute; z-index: -1; width: 60rem; height: 60rem; right: -20rem; top: -30rem; border-radius: 999px; background: radial-gradient(circle, color-mix(in srgb, var(--c-fondo) 85%, transparent), transparent 65%); pointer-events: none; }
+
+  /* ── Titulares ──────────────────────────────────────────────────────────── */
+  .antetitulo { display: inline-flex; align-items: center; gap: .6rem; font-size: .78rem; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; color: var(--c-primario); }
+  .antetitulo::before { content: ""; width: .55rem; height: .55rem; flex: none; border-radius: 999px; background: var(--c-acento); box-shadow: 0 0 0 4px color-mix(in srgb, var(--c-acento) 30%, transparent); }
+  .antetitulo::after { content: ""; width: 2.5rem; height: 2px; flex: none; border-radius: 2px; background: var(--c-acento); }
+  .tono-primario .antetitulo, .tono-noche .antetitulo { color: #fff; }
+  .tono-acento .antetitulo { color: var(--tinta); }
+  .tono-acento .antetitulo::before, .tono-acento .antetitulo::after { background: var(--tinta); box-shadow: none; }
+
+  .titulo-seccion { font-size: clamp(2.1rem, 5vw, 4rem); margin-top: 1rem; }
+  /* La sonrisa: un arco menta bajo la última palabra */
+  .sonrisa { position: relative; display: inline-block; }
+  .sonrisa::after { content: ""; position: absolute; left: 4%; right: 4%; bottom: -.2em; height: .32em; border: solid var(--c-acento); border-width: 0 0 .09em; border-radius: 0 0 50% 50% / 0 0 100% 100%; pointer-events: none; }
+  .tono-acento .sonrisa::after { border-color: var(--tinta); }
+  .titular { margin-bottom: clamp(2.5rem, 4.5vw, 4rem); }
+  .titular-cabeza { max-width: 54rem; }
+  .titular-texto { margin-top: 1.25rem; font-size: 1.15rem; opacity: .8; max-width: 42rem; }
+  @media (min-width: 1024px) {
+    .titular--partido { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 4rem; align-items: end; }
+    .titular--partido .titular-texto { margin-top: 0; }
+  }
+  .titular--centro { text-align: center; }
+  .titular--centro .titular-cabeza, .titular--centro .titular-texto { margin-inline: auto; }
+
+  /* ── Botones ────────────────────────────────────────────────────────────── */
+  .btn { min-height: 3.1rem; padding-inline: 1.6rem; border-radius: var(--radio); background: var(--c-primario); color: #fff; font-weight: 750; }
+  .btn:hover { background: color-mix(in srgb, var(--c-primario) 84%, #000); }
+  .btn-sec { min-height: 3.1rem; padding-inline: 1.5rem; border-radius: var(--radio); border: 2px solid color-mix(in srgb, currentColor 35%, transparent); background: transparent; color: inherit; font-weight: 700; }
+  .btn-sec:hover { border-color: currentColor; background: color-mix(in srgb, currentColor 8%, transparent); }
+  .btn--menta { background: var(--c-acento); color: var(--tinta); }
+  .btn--menta:hover { background: color-mix(in srgb, var(--c-acento) 85%, #000); }
+  .tono-primario .btn, .tono-noche .btn { background: var(--c-acento); color: var(--tinta); }
+  .tono-primario .btn:hover, .tono-noche .btn:hover { background: color-mix(in srgb, var(--c-acento) 85%, #fff); }
+  .tono-acento .btn { background: var(--noche); color: #fff; }
+  .tono-acento .btn:hover { background: color-mix(in srgb, var(--noche) 80%, #000); }
+
+  /* Icono en cuadrado redondeado */
+  .icono-caja { display: grid; place-items: center; flex: none; width: 3rem; height: 3rem; border-radius: var(--radio); background: var(--cielo-2); color: var(--c-primario); }
+  .tono-noche .icono-caja, .tono-primario .icono-caja { background: color-mix(in srgb, #fff 12%, transparent); color: var(--c-acento); }
+
+  /* Etiquetas pequeñas (duración, categoría) */
+  .etiqueta { display: inline-flex; align-items: center; gap: .35rem; min-height: 1.75rem; padding: .2rem .65rem; border-radius: .5rem; font-size: .8rem; font-weight: 700; line-height: 1.2; background: var(--cielo); color: var(--c-primario); }
+
+  /* ── Cabecera ───────────────────────────────────────────────────────────── */
+  .cabecera--luz { position: sticky; top: 0; z-index: 50; background: color-mix(in srgb, var(--c-fondo) 94%, transparent); backdrop-filter: saturate(1.4) blur(10px); color: var(--c-texto); border-bottom: 1px solid var(--linea); }
+  .cabecera--luz .cabecera-fila { min-height: 4.75rem; }
+  .cabecera--luz .marca-inicial { display: grid; place-items: center; width: 2.6rem; height: 2.6rem; flex: none; border-radius: .8rem; background: var(--c-primario); color: #fff; }
+  .cabecera--luz .marca-nombre { font-family: var(--fuente-titulos); font-weight: 800; font-size: 1.12rem; letter-spacing: -0.015em; }
+  .cabecera--luz .cabecera-nav { gap: .15rem; }
+  .cabecera--luz .cabecera-nav a { position: relative; padding: .55rem .75rem; font-weight: 650; font-size: .95rem; white-space: nowrap; border-radius: .6rem; }
+  .cabecera--luz .cabecera-nav a:hover { background: var(--cielo); color: var(--c-primario); }
+  .cabecera-tel { display: none; align-items: center; gap: .45rem; min-height: 2.75rem; font-weight: 750; text-decoration: none; white-space: nowrap; color: var(--c-primario); }
+  @media (min-width: 1280px) { .cabecera-tel { display: inline-flex; } }
+  .cabecera--luz .menu-movil summary { min-height: 2.75rem; padding: .5rem .9rem; border-radius: .8rem; background: var(--cielo); color: var(--c-primario); }
+  .cabecera--luz .menu-movil-panel { padding: .75rem 1rem 1.25rem; border-bottom: 1px solid var(--linea); }
+  .cabecera--luz .menu-movil-panel a { font-weight: 650; min-height: 2.75rem; display: flex; align-items: center; }
+  .cabecera--luz .menu-movil-panel .btn { justify-content: center; color: #fff; }
+
+  /* ── Pie ────────────────────────────────────────────────────────────────── */
+  .pie--luz { background: var(--noche); color: #fff; padding-top: clamp(3.5rem, 6vw, 5.5rem); }
+  .pie--luz .pie-nombre { font-family: var(--fuente-titulos); font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; }
+  .pie--luz .pie-titulo { color: var(--c-acento); opacity: 1; font-weight: 800; letter-spacing: .18em; }
+  .pie--luz .pie-redes a { border-radius: .7rem; background: color-mix(in srgb, #fff 10%, transparent); padding: .65rem; }
+  .pie--luz .pie-redes a:hover { background: var(--c-acento); color: var(--tinta); }
+  @media (min-width: 768px) { .pie--luz .pie-rejilla { grid-template-columns: 1.5fr 1.2fr 1fr; gap: 3rem; } }
+  @media (min-width: 1024px) { .pie--luz .pie-rejilla--cuatro { grid-template-columns: 1.5fr 1.2fr 1fr 1.2fr; } }
+  .pie-cita { display: block; border-radius: var(--radio); background: var(--c-acento); color: var(--tinta); padding: 1.25rem 1.4rem; text-decoration: none; }
+  .pie-cita:hover { background: color-mix(in srgb, var(--c-acento) 88%, #fff); }
+
+  /* ── Formularios ────────────────────────────────────────────────────────── */
+  .campo input, .campo textarea, .campo select { width: 100%; min-height: 3rem; font: inherit; color: var(--c-texto); background: var(--c-fondo); padding: .7rem 1rem; border: 1.5px solid color-mix(in srgb, var(--c-texto) 16%, transparent); border-radius: .75rem; }
+  .campo select { appearance: none; background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%); background-position: calc(100% - 1.3rem) 1.3rem, calc(100% - .95rem) 1.3rem; background-size: .35rem .35rem; background-repeat: no-repeat; padding-right: 2.5rem; }
+  .campo input:focus, .campo textarea:focus, .campo select:focus { border-color: var(--c-primario); outline: none; box-shadow: 0 0 0 3px color-mix(in srgb, var(--c-primario) 25%, transparent); }
+  .formulario .btn { justify-self: stretch; }
+  @media (min-width: 640px) { .formulario .btn { justify-self: start; } }
+  .franjas { display: flex; flex-wrap: wrap; gap: .5rem; border: 0; padding: 0; margin: 0; min-width: 0; }
+  .franjas legend { font-size: .9rem; font-weight: 600; margin-bottom: .35rem; }
+  .franja { position: relative; }
+  .franja input { position: absolute; opacity: 0; inset: 0; }
+  .franja span { display: inline-flex; align-items: center; min-height: 2.75rem; padding: .5rem 1rem; border-radius: .75rem; border: 1.5px solid color-mix(in srgb, var(--c-texto) 16%, transparent); background: var(--c-fondo); color: var(--c-texto); font-weight: 650; font-size: .95rem; cursor: pointer; }
+  .franja input:checked + span { background: var(--c-primario); border-color: var(--c-primario); color: #fff; }
+  .franja input:focus-visible + span { outline: 2px solid var(--c-acento); outline-offset: 2px; }
+
+  /* ── Preguntas ──────────────────────────────────────────────────────────── */
+  .faq { border-bottom: 1px solid var(--linea); }
+  .faq summary { list-style: none; cursor: pointer; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq-signo { transition: transform .2s ease, background-color .2s ease; }
+  .faq[open] .faq-signo { transform: rotate(45deg); background: var(--c-acento); color: var(--tinta); }
+
+  .texto-largo h2 { font-size: 1.45rem; }
+}
+
+/* Con seis apartados y un nombre largo, el menú en línea solo cabe desde 1120 px: hasta ahí, el plegable. */
+@media (min-width: 900px) and (max-width: 1119px) {
+  .cabecera--luz .cabecera-nav { display: none; }
+  .cabecera--luz .menu-movil { display: block; }
+}

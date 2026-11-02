@@ -1,0 +1,92 @@
+# Metadatos de la plantilla para el catálogo de NoExpertise.
+id: clinica-dental
+nombre: Clínica dental
+descripcion: Web luminosa para clínicas dentales, con tratamientos y precios, financiación, primera visita y cita.
+sectores:
+  - { id: dentista, nombre: Dentista }
+  - { id: clinica-dental, nombre: Clínica dental }
+  - { id: ortodoncia, nombre: Ortodoncia }
+  - { id: implantes, nombre: Implantes dentales }
+  - { id: odontopediatria, nombre: Odontopediatría }
+secciones:
+  - { id: hero, nombre: Portada }
+  - { id: tratamientos, nombre: Tratamientos }
+  - { id: financiacion, nombre: Financiación }
+  - { id: equipo, nombre: Equipo }
+  - { id: tecnologia, nombre: Tecnología }
+  - { id: primera-visita, nombre: Primera visita }
+  - { id: opiniones, nombre: Opiniones }
+  - { id: preguntas, nombre: Preguntas frecuentes }
+  - { id: cita, nombre: Pedir cita }
+  - { id: contacto, nombre: Contacto }
+estilo: limpio
+plan_minimo: presencia
+version: 1.0.0
+base: astrowind
+demo_url: https://demo-plantilla-clinica-dental.noexpertise.com
+activa: true
+orden: 490
+
+# Asistente de puesta en marcha (NoExpertise): un paso por pantalla. Rutas del site sin índices;
+# tipos: texto y lista (la IA propone), datos, fotos, eleccion (colores y logo) y repaso.
+asistente:
+  - id: negocio
+    titulo: "Tu clínica"
+    pregunta: "¿Cómo se llama tu clínica y qué tratamientos hacéis sobre todo?"
+    ayuda: "Especialidades, para quién trabajáis y en qué barrio o ciudad estáis."
+    tipo: texto
+    campos: [nombre, eslogan, seo.titulo, seo.descripcion, secciones.hero.antetitulo, secciones.hero.titulo, secciones.hero.texto, secciones.hero.items, secciones.hero.destacado.titulo, secciones.hero.destacado.texto]
+  - id: contacto
+    titulo: "Cómo te encuentran"
+    pregunta: "¿Dónde está la clínica y cómo os pueden llamar o escribir?"
+    ayuda: "Solo lo que quieras que vean tus pacientes. Lo que dejes vacío no sale en tu web."
+    tipo: datos
+    campos: [contacto.telefono, contacto.whatsapp, contacto.email, contacto.direccion, contacto.horario, redes.instagram, redes.facebook]
+  - id: tratamientos
+    titulo: "Tratamientos"
+    pregunta: "¿Qué tratamientos ofrecéis? Uno por línea, con su duración y el precio «desde» si quieres enseñarlo."
+    ayuda: "Si prefieres no poner precios, escribe solo los nombres. Se agrupan por tipo: prevención, estética, ortodoncia…"
+    tipo: lista
+    campos: [secciones.tratamientos.tratamientos]
+  - id: financiacion
+    titulo: "Financiación"
+    pregunta: "¿Ofrecéis pago a plazos? Cuéntame cómo funciona y qué ventajas tiene."
+    ayuda: "Si no financiáis, salta este paso y oculta el apartado en Contenido."
+    tipo: texto
+    campos: [secciones.financiacion.titulo, secciones.financiacion.texto, secciones.financiacion.destacado.titulo, secciones.financiacion.destacado.texto, secciones.financiacion.items]
+  - id: equipo
+    titulo: "Tu equipo"
+    pregunta: "¿Quién forma el equipo? Nombre, cargo y especialidad de cada uno, uno por línea."
+    ayuda: "Las fotos las pones luego en Contenido."
+    tipo: lista
+    campos: [secciones.equipo.personas]
+  - id: tecnologia
+    titulo: "Tecnología"
+    pregunta: "¿Qué equipos tenéis en la clínica? Escáner 3D, radiografía digital, microscopio…"
+    tipo: texto
+    campos: [secciones.tecnologia.titulo, secciones.tecnologia.texto, secciones.tecnologia.items]
+  - id: primera-visita
+    titulo: "Primera visita"
+    pregunta: "¿Cómo es la primera visita? ¿Es gratis? ¿Qué incluye?"
+    tipo: texto
+    campos: [secciones.primera-visita.titulo, secciones.primera-visita.texto, secciones.primera-visita.items]
+  - id: preguntas
+    titulo: "Preguntas frecuentes"
+    pregunta: "¿Qué os preguntan más a menudo los pacientes? Escribe cada pregunta y lo que respondéis."
+    ayuda: "Si lo prefieres, añádelas luego en Contenido."
+    tipo: lista
+    campos: [secciones.preguntas.preguntas]
+  - id: fotos
+    titulo: "Tus fotos"
+    pregunta: "Pon una foto de portada y, si quieres, alguna más de la clínica."
+    ayuda: "Sube las tuyas o elige una del banco. Las que no cambies se quedan como están."
+    tipo: fotos
+    campos: [secciones.hero.imagen, secciones.tecnologia.imagen, secciones.tecnologia.galeria, secciones.primera-visita.imagen, secciones.cita.imagen, secciones.contacto.imagen]
+  - id: aspecto
+    titulo: "Colores y logo"
+    pregunta: "Elige los colores de tu web y, si tienes, tu logo."
+    tipo: eleccion
+    campos: [colores.primario, colores.acento, logo]
+  - id: repaso
+    titulo: "Repaso"
+    tipo: repaso

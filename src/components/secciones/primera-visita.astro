@@ -1,0 +1,67 @@
+---
+// Primera visita: banda menta plena a todo el ancho, partida 50/50. A la izquierda, titular grande, texto, lo que
+// incluye (`items` {titulo}) con marcas en dos columnas, el botón (`cta`) y el segundo botón (`cta_secundario`) y una
+// nota pequeña (`nota`). A la derecha, la foto (`imagen`) a sangre hasta los bordes de arriba, derecha y abajo de la
+// banda. Sin foto, el texto ocupa todo el ancho.
+import { seccion, parrafos } from '../../data/site';
+import { altSeccion } from '../../lib/seo';
+import Seccion from '../ui/Seccion.astro';
+import Titular from '../ui/Titular.astro';
+import Imagen from '../ui/Imagen.astro';
+import Icono from '../ui/Icono.astro';
+interface Props { id: string }
+const s = seccion(Astro.props.id);
+const items = s ? s.items.filter((it) => it?.titulo) : [];
+const nota = String(s?.nota ?? '').trim();
+---
+
+{
+  s && (
+    <Seccion id={Astro.props.id} tono="acento" contenedor={false}>
+      <div class:list={['pv-fila', { 'pv-fila--sin-foto': !s.imagen }]}>
+        <div class="pv-cuerpo">
+          <Titular antetitulo={s.antetitulo} titulo={s.titulo} class="!mb-0 pv-titular" />
+          {parrafos(s.texto).map((p) => <p class="mt-5 max-w-2xl text-[1.15rem] opacity-90">{p}</p>)}
+          {items.length > 0 && (
+            <ul class="pv-lista">
+              {items.map((it) => (
+                <li class="flex items-start gap-3 font-bold">
+                  <span class="pv-check"><Icono nombre="check" tam={16} /></span>
+                  {it.titulo}
+                </li>
+              ))}
+            </ul>
+          )}
+          {(s.cta?.url || s.cta_secundario?.url) && (
+            <div class="mt-10 flex flex-wrap gap-3">
+              {s.cta?.url && <a class="btn" href={s.cta.url}>{s.cta.texto} <Icono nombre="flecha" tam={18} /></a>}
+              {s.cta_secundario?.url && <a class="btn-sec" href={s.cta_secundario.url}>{s.cta_secundario.texto}</a>}
+            </div>
+          )}
+          {nota && <p class="mt-5 text-sm font-semibold opacity-80">{nota}</p>}
+        </div>
+        {s.imagen && (
+          <div class="pv-foto">
+            <Imagen src={s.imagen} alt={altSeccion(s)} ancho={1400} alto={1200} class="h-full w-full object-cover" />
+          </div>
+        )}
+      </div>
+    </Seccion>
+  )
+}
+
+<style>
+  .pv-fila { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2.75rem; }
+  .pv-cuerpo { padding-inline: 1rem; }
+  .pv-cuerpo :global(.titulo-seccion) { font-size: clamp(2.4rem, 5.6vw, 4.75rem); }
+  .pv-lista { display: grid; gap: .9rem 2rem; margin-top: 2.25rem; }
+  .pv-check { display: grid; place-items: center; flex: none; width: 1.6rem; height: 1.6rem; margin-top: .1rem; border-radius: .5rem; background: var(--noche); color: #fff; }
+  .pv-foto { order: 2; overflow: hidden; aspect-ratio: 4 / 3; margin-bottom: calc(-1 * var(--pad)); }
+  @media (min-width: 640px) { .pv-lista { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 768px) { .pv-cuerpo { width: 100%; max-width: var(--ancho); margin-inline: auto; padding-inline: 2rem; } }
+  @media (min-width: 1024px) {
+    .pv-fila:not(.pv-fila--sin-foto) { grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); align-items: center; gap: clamp(3rem, 6vw, 6rem); }
+    .pv-fila:not(.pv-fila--sin-foto) .pv-cuerpo { max-width: none; padding-right: 0; padding-left: max(2rem, calc((100vw - var(--ancho)) / 2 + 2rem)); }
+    .pv-foto { align-self: stretch; aspect-ratio: auto; min-height: 36rem; margin-top: calc(-1 * var(--pad)); border-radius: 0; }
+  }
+</style>

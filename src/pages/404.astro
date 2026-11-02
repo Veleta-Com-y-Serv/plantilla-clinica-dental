@@ -1,0 +1,32 @@
+---
+// Página no encontrada con el diseño de la plantilla: banda partida a todo el ancho, cielo pálido con el texto y,
+// a la derecha, un bloque azul cielo pleno con un «404» enorme y su sonrisa menta.
+import Base from '../layouts/Base.astro';
+import { site, tel } from '../data/site';
+---
+
+<Base titulo="Página no encontrada">
+  <section class="error">
+    <div class="error-texto">
+      <p class="antetitulo">Error 404</p>
+      <h1 class="mt-4 text-[clamp(2.6rem,6.5vw,5.5rem)]">Esta página no está en <span class="sonrisa">consulta.</span></h1>
+      <p class="mt-6 max-w-xl text-lg opacity-80">Puede que el enlace esté mal o que la página se haya movido. Vuelve al inicio y te ayudamos desde allí.</p>
+      <p class="mt-9 flex flex-wrap gap-3">
+        <a class="btn" href="/">Volver al inicio</a>
+        {site.contacto.telefono && <a class="btn-sec" href={tel(site.contacto.telefono)}>{site.contacto.telefono}</a>}
+      </p>
+    </div>
+    <p class="error-bloque" aria-hidden="true"><span class="sonrisa">404</span></p>
+  </section>
+</Base>
+
+<style>
+  .error { display: grid; min-height: 70svh; background: var(--cielo); }
+  .error-texto { padding: 4rem 1rem; }
+  .error-bloque { display: grid; place-items: center; min-height: 14rem; margin: 0; background: var(--c-primario); color: #fff; font-family: var(--fuente-titulos); font-size: clamp(5rem, 16vw, 12rem); font-weight: 800; letter-spacing: -0.05em; }
+  @media (min-width: 768px) { .error-texto { padding-inline: 2rem; } }
+  @media (min-width: 1024px) {
+    .error { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); }
+    .error-texto { display: flex; flex-direction: column; justify-content: center; padding-left: max(2rem, calc((100vw - var(--ancho)) / 2 + 2rem)); padding-right: 4rem; }
+  }
+</style>

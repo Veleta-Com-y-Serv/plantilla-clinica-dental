@@ -1,0 +1,86 @@
+---
+// Tratamientos: banda blanca a todo el ancho. Titular partido y, por cada `categoria` (en el orden en que aparece),
+// una fila: el nombre del grupo grande a la izquierda y, a la derecha, una rejilla de celdas separadas por líneas
+// finas (3 columnas en escritorio) con icono, nombre, texto, `duracion` y `precio` («desde 35 €»). Sin precio no hay
+// precio; sin categorías, una sola rejilla a todo el ancho.
+import { seccion } from '../../data/site';
+import type { Tratamiento } from '../../data/site';
+import Seccion from '../ui/Seccion.astro';
+import Titular from '../ui/Titular.astro';
+import Icono from '../ui/Icono.astro';
+interface Props { id: string }
+const s = seccion(Astro.props.id);
+const lista = s ? s.tratamientos.filter((t) => t?.nombre) : [];
+const grupos: { nombre: string; items: Tratamiento[] }[] = [];
+for (const t of lista) {
+  const g = String(t.categoria ?? '').trim();
+  let grupo = grupos.find((x) => x.nombre === g);
+  if (!grupo) grupos.push((grupo = { nombre: g, items: [] }));
+  grupo.items.push(t);
+}
+const conGrupos = grupos.some((g) => g.nombre);
+---
+
+{
+  s && (
+    <Seccion id={Astro.props.id} tono="claro">
+      <Titular antetitulo={s.antetitulo} titulo={s.titulo} texto={s.texto} alinear="partido" />
+      {grupos.length > 0 && (
+        <div class="trat-grupos">
+          {grupos.map((g, gi) => (
+            <div class:list={['trat-grupo', { 'trat-grupo--solo': !conGrupos }]}>
+              {conGrupos && (
+                <div class="trat-cabeza">
+                  <span class="trat-num" aria-hidden="true">{String(gi + 1).padStart(2, '0')}</span>
+                  <h3 class="trat-grupo-nombre">{g.nombre}</h3>
+                </div>
+              )}
+              <ul class="trat-rejilla">
+                {g.items.map((t) => (
+                  <li class="trat-celda">
+                    <span class="icono-caja"><Icono nombre={t.icono ?? 'diente'} tam={24} /></span>
+                    <h4 class="trat-nombre">{t.nombre}</h4>
+                    {t.texto && <p class="trat-texto">{t.texto}</p>}
+                    {(t.duracion || t.precio) && (
+                      <p class="trat-pie">
+                        {t.duracion && <span class="etiqueta"><Icono nombre="reloj" tam={14} /> {t.duracion}</span>}
+                        {t.precio && <span class="trat-precio">{t.precio}</span>}
+                      </p>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      )}
+    </Seccion>
+  )
+}
+
+<style>
+  .trat-grupos { display: grid; gap: clamp(2.5rem, 5vw, 4rem); }
+  .trat-grupo { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.25rem; }
+  .trat-cabeza { display: flex; align-items: baseline; gap: .9rem; padding-bottom: .9rem; border-bottom: 2px solid var(--c-primario); }
+  .trat-num { font-family: var(--fuente-titulos); font-size: .95rem; font-weight: 800; color: var(--c-primario); }
+  .trat-grupo-nombre { font-size: clamp(1.5rem, 2.6vw, 2.2rem); font-weight: 800; }
+  .trat-rejilla { display: grid; grid-template-columns: minmax(0, 1fr); border-top: 1px solid var(--linea); }
+  .trat-celda { display: flex; flex-direction: column; gap: .7rem; padding: 1.5rem .25rem; border-bottom: 1px solid var(--linea); transition: background-color .2s ease; }
+  .trat-nombre { font-family: var(--fuente-titulos); font-size: 1.25rem; font-weight: 800; line-height: 1.25; margin-top: .35rem; }
+  .trat-texto { opacity: .78; font-size: 1rem; line-height: 1.6; }
+  .trat-pie { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .5rem 1rem; margin-top: auto; padding-top: .5rem; }
+  .trat-precio { font-family: var(--fuente-titulos); font-weight: 800; font-size: 1.1rem; color: var(--c-primario); }
+  @media (min-width: 640px) {
+    .trat-rejilla { grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 0; border-left: 1px solid var(--linea); }
+    .trat-celda { padding: 1.75rem 1.5rem; border-right: 1px solid var(--linea); border-top: 1px solid var(--linea); border-bottom: 0; }
+    .trat-rejilla { border-bottom: 1px solid var(--linea); }
+    .trat-celda:hover { background: var(--cielo); }
+  }
+  @media (min-width: 1024px) {
+    .trat-grupo { grid-template-columns: minmax(0, 1fr) minmax(0, 3fr); gap: 3rem; align-items: start; }
+    .trat-grupo--solo { grid-template-columns: minmax(0, 1fr); }
+    .trat-cabeza { position: sticky; top: 6.5rem; flex-direction: column; gap: .4rem; border-bottom: 0; border-top: 2px solid var(--c-primario); padding: 1.25rem 0 0; }
+    .trat-rejilla { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .trat-grupo--solo .trat-rejilla { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  }
+</style>

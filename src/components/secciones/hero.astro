@@ -1,0 +1,97 @@
+---
+// Portada partida 50/50 a pantalla casi completa: a la izquierda, sobre cielo pálido, antetítulo, título enorme con
+// la «sonrisa» bajo la última palabra, texto corto, dos botones y las garantías (`items` {titulo, icono}) en fila.
+// A la derecha, la foto (`imagen`) a sangre hasta los bordes de arriba, derecha y abajo, con la ficha blanca de
+// `destacado` {titulo, texto} apoyada en su esquina («Primera visita sin coste…»). En móvil, la foto va debajo, a
+// sangre. Sin foto: banda de cielo a todo el ancho con el texto y la ficha al lado.
+import { seccion, partirTitulo } from '../../data/site';
+import { altHero } from '../../lib/seo';
+import Imagen from '../ui/Imagen.astro';
+import Icono from '../ui/Icono.astro';
+interface Props { id: string; primera?: boolean }
+const { id, primera = false } = Astro.props;
+const s = seccion(id);
+const destacado = (s?.destacado ?? {}) as { titulo?: string; texto?: string };
+const [inicio, final] = partirTitulo(s?.titulo);
+const H = primera ? 'h1' : 'h2';
+const garantias = s ? s.items.filter((it) => it?.titulo) : [];
+---
+
+{
+  s && (
+    <section id={id} class:list={['hero', { 'hero--sin-foto': !s.imagen }]}>
+      <div class="hero-texto">
+        <div class="hero-texto-in">
+          {s.antetitulo && <p class="antetitulo">{s.antetitulo}</p>}
+          {s.titulo && (
+            <H class="hero-titulo">
+              {inicio}
+              <span class="sonrisa">{final}</span>
+            </H>
+          )}
+          {s.texto && <p class="hero-parrafo">{s.texto}</p>}
+          {(s.cta?.url || s.cta_secundario?.url) && (
+            <div class="mt-9 flex flex-wrap gap-3">
+              {s.cta?.url && <a class="btn" href={s.cta.url}>{s.cta.texto} <Icono nombre="flecha" tam={18} /></a>}
+              {s.cta_secundario?.url && <a class="btn-sec" href={s.cta_secundario.url}>{s.cta_secundario.texto}</a>}
+            </div>
+          )}
+          {garantias.length > 0 && (
+            <ul class="hero-garantias">
+              {garantias.map((it) => (
+                <li>
+                  <span class="hero-garantia-icono"><Icono nombre={it.icono ?? 'check'} tam={18} /></span>
+                  {it.titulo}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      </div>
+      {(s.imagen || destacado.titulo) && (
+        <div class="hero-lado">
+          {s.imagen && <Imagen src={s.imagen} alt={altHero()} ancho={1600} alto={1800} prioridad={primera} class="hero-foto" />}
+          {destacado.titulo && (
+            <p class="hero-ficha">
+              <span class="icono-caja hero-ficha-icono"><Icono nombre="chispa" tam={22} /></span>
+              <span>
+                <span class="hero-ficha-titulo">{destacado.titulo}</span>
+                {destacado.texto && <span class="hero-ficha-texto">{destacado.texto}</span>}
+              </span>
+            </p>
+          )}
+        </div>
+      )}
+    </section>
+  )
+}
+
+<style>
+  .hero { position: relative; display: grid; grid-template-columns: minmax(0, 1fr); background: var(--cielo); color: var(--c-texto); overflow: clip; }
+  .hero-texto { padding: clamp(3rem, 9vw, 5rem) 1rem 3rem; }
+  .hero-titulo { margin-top: 1.1rem; font-size: clamp(2.6rem, 5.6vw, 5.75rem); font-weight: 800; line-height: 1.02; letter-spacing: -0.035em; }
+  .hero-parrafo { margin-top: 1.5rem; max-width: 36rem; font-size: clamp(1.08rem, 1.5vw, 1.3rem); line-height: 1.6; opacity: .82; }
+  .hero-garantias { display: flex; flex-wrap: wrap; gap: .6rem 1.5rem; margin-top: 2.25rem; padding-top: 1.75rem; border-top: 1px solid var(--linea); font-weight: 650; font-size: .95rem; }
+  .hero-garantias li { display: inline-flex; align-items: center; gap: .55rem; }
+  .hero-garantia-icono { display: grid; place-items: center; width: 1.9rem; height: 1.9rem; border-radius: .55rem; background: var(--c-acento); color: var(--tinta); }
+  .hero-lado { position: relative; aspect-ratio: 4 / 3.4; }
+  .hero :global(.hero-foto) { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 45%; }
+  .hero-ficha { position: absolute; left: 1rem; right: 1rem; bottom: 1rem; display: flex; gap: .9rem; align-items: center; margin: 0; padding: 1rem 1.15rem; border-radius: var(--radio); background: var(--c-fondo); color: var(--c-texto); box-shadow: 0 24px 50px -24px rgb(0 0 0 / .45); }
+  .hero-ficha-icono { background: var(--menta); color: var(--c-primario); }
+  .hero-ficha-titulo { display: block; font-family: var(--fuente-titulos); font-size: 1.15rem; font-weight: 800; line-height: 1.2; }
+  .hero-ficha-texto { display: block; font-size: .9rem; opacity: .75; line-height: 1.4; margin-top: .15rem; }
+  .hero--sin-foto .hero-lado { aspect-ratio: auto; min-height: 0; padding: 0 1rem 3rem; }
+  .hero--sin-foto .hero-ficha { position: static; }
+  @media (min-width: 768px) {
+    .hero-texto { padding-inline: 2rem; }
+    .hero-ficha { left: 2rem; right: auto; bottom: 2rem; max-width: 24rem; }
+  }
+  @media (min-width: 1024px) {
+    .hero { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); min-height: calc(88svh - 4.75rem); }
+    .hero-texto { display: flex; align-items: center; padding-block: clamp(4rem, 9vh, 7rem); padding-left: max(2rem, calc((100vw - var(--ancho)) / 2 + 2rem)); padding-right: clamp(2rem, 4vw, 4.5rem); }
+    .hero-lado { aspect-ratio: auto; min-height: 100%; }
+    .hero-ficha { left: -2.5rem; bottom: clamp(2rem, 6vh, 4rem); }
+    .hero--sin-foto { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); }
+    .hero--sin-foto .hero-lado { display: flex; align-items: center; padding: 0 max(2rem, calc((100vw - var(--ancho)) / 2 + 2rem)) 0 0; }
+  }
+</style>

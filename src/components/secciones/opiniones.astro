@@ -1,0 +1,58 @@
+---
+// Opiniones: banda blanca. La primera opinión (`testimonios` {texto, autor}) va como cita enorme a todo el ancho
+// del contenedor, con comillas menta; las demás, debajo, en columnas (3 en escritorio) separadas por líneas finas,
+// con cinco estrellas. Sin opiniones, solo el titular.
+import { seccion } from '../../data/site';
+import Seccion from '../ui/Seccion.astro';
+import Titular from '../ui/Titular.astro';
+import Icono from '../ui/Icono.astro';
+interface Props { id: string }
+const s = seccion(Astro.props.id);
+const todas = s ? s.testimonios.filter((t) => t?.texto) : [];
+const [primera, ...resto] = todas;
+---
+
+{
+  s && (
+    <Seccion id={Astro.props.id} tono="claro">
+      <Titular antetitulo={s.antetitulo} titulo={s.titulo} texto={s.texto} alinear="partido" />
+      {primera && (
+        <figure class="op-grande">
+          <span class="op-comillas" aria-hidden="true">“</span>
+          <blockquote class="op-grande-texto">{primera.texto}</blockquote>
+          {primera.autor && <figcaption class="op-autor">{primera.autor}</figcaption>}
+        </figure>
+      )}
+      {resto.length > 0 && (
+        <ul class="op-rejilla">
+          {resto.map((t) => (
+            <li class="op-celda">
+              <p class="flex gap-1 text-acento" aria-label="5 de 5 estrellas">
+                {[0, 1, 2, 3, 4].map(() => <Icono nombre="estrella" tam={18} class="fill-current" />)}
+              </p>
+              <blockquote class="mt-4 text-[1.08rem] leading-relaxed">{t.texto}</blockquote>
+              {t.autor && <p class="op-autor op-autor--peq">{t.autor}</p>}
+            </li>
+          ))}
+        </ul>
+      )}
+    </Seccion>
+  )
+}
+
+<style>
+  .op-grande { position: relative; padding: 2.5rem 0 0; border-top: 2px solid var(--c-primario); }
+  .op-comillas { position: absolute; top: -.1em; right: 0; font-family: Georgia, "Times New Roman", serif; font-size: clamp(7rem, 16vw, 13rem); line-height: 1; color: var(--c-acento); }
+  .op-grande-texto { position: relative; max-width: 68rem; font-family: var(--fuente-titulos); font-size: clamp(1.6rem, 3.6vw, 3rem); font-weight: 700; line-height: 1.22; letter-spacing: -0.02em; }
+  .op-autor { margin-top: 1.5rem; font-weight: 800; color: var(--c-primario); }
+  .op-autor--peq { margin-top: 1.25rem; font-size: .95rem; }
+  .op-rejilla { display: grid; margin-top: clamp(3rem, 6vw, 4.5rem); border-top: 1px solid var(--linea); }
+  .op-celda { padding: 2rem 0; border-bottom: 1px solid var(--linea); }
+  @media (min-width: 768px) {
+    .op-rejilla { grid-template-columns: repeat(2, minmax(0, 1fr)); border-bottom: 0; }
+    .op-celda { padding: 2rem 2rem 2rem 0; border-bottom: 0; }
+    .op-celda + .op-celda { padding-left: 2rem; border-left: 1px solid var(--linea); }
+  }
+  @media (min-width: 1024px) { .op-rejilla { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  @media (max-width: 767px) { .op-comillas { opacity: .5; } }
+</style>

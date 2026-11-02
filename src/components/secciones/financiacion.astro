@@ -1,0 +1,80 @@
+---
+// Financiación: banda azul cielo plena a todo el ancho. A la izquierda, titular, `destacado` {titulo, texto} en cifra
+// enorme («0 %» · «de interés hasta 12 meses») y el botón (`cta`). A la derecha, los pasos (`items` con
+// `categoria: Paso`) numerados en línea vertical. Debajo, a todo el ancho del contenedor, las ventajas (`items` con
+// `categoria: Ventaja`, o sin categoría) en 4 columnas con icono. Cada parte se oculta si no tiene elementos.
+import { seccion } from '../../data/site';
+import type { ItemFinanciacion } from '../../data/site';
+import Seccion from '../ui/Seccion.astro';
+import Titular from '../ui/Titular.astro';
+import Icono from '../ui/Icono.astro';
+interface Props { id: string }
+const s = seccion(Astro.props.id);
+const items = (s ? s.items : []).filter((it) => it?.titulo) as ItemFinanciacion[];
+const esPaso = (it: ItemFinanciacion) => /^pasos?$/i.test(String(it.categoria ?? '').trim());
+const pasos = items.filter(esPaso);
+const ventajas = items.filter((it) => !esPaso(it));
+const destacado = (s?.destacado ?? {}) as { titulo?: string; texto?: string };
+---
+
+{
+  s && (
+    <Seccion id={Astro.props.id} tono="primario">
+      <div class:list={['fin-fila', { 'fin-fila--sin-pasos': !pasos.length }]}>
+        <div>
+          <Titular antetitulo={s.antetitulo} titulo={s.titulo} texto={s.texto} class="!mb-0" />
+          {destacado.titulo && (
+            <p class="fin-cifra">
+              <span class="fin-cifra-titulo">{destacado.titulo}</span>
+              {destacado.texto && <span class="fin-cifra-texto">{destacado.texto}</span>}
+            </p>
+          )}
+          {s.cta?.url && <a class="btn mt-9" href={s.cta.url}>{s.cta.texto} <Icono nombre="flecha" tam={18} /></a>}
+        </div>
+        {pasos.length > 0 && (
+          <ol class="fin-pasos">
+            {pasos.map((p, i) => (
+              <li class="fin-paso">
+                <span class="fin-paso-num">{i + 1}</span>
+                <div>
+                  <h3 class="text-xl font-extrabold">{p.titulo}</h3>
+                  {p.texto && <p class="mt-1.5 opacity-85">{p.texto}</p>}
+                </div>
+              </li>
+            ))}
+          </ol>
+        )}
+      </div>
+      {ventajas.length > 0 && (
+        <ul class="fin-ventajas">
+          {ventajas.map((v) => (
+            <li class="fin-ventaja">
+              <span class="icono-caja"><Icono nombre={v.icono ?? 'check'} tam={22} /></span>
+              <h3 class="mt-4 text-lg font-extrabold">{v.titulo}</h3>
+              {v.texto && <p class="mt-1 text-[.98rem] opacity-80">{v.texto}</p>}
+            </li>
+          ))}
+        </ul>
+      )}
+    </Seccion>
+  )
+}
+
+<style>
+  .fin-fila { display: grid; grid-template-columns: minmax(0, 1fr); gap: 3rem; }
+  .fin-cifra { display: flex; flex-wrap: wrap; align-items: baseline; gap: .5rem 1.25rem; margin-top: 2.25rem; }
+  .fin-cifra-titulo { font-family: var(--fuente-titulos); font-size: clamp(4.5rem, 12vw, 9rem); font-weight: 800; line-height: .9; letter-spacing: -0.05em; color: #fff; text-decoration: underline; text-decoration-color: var(--c-acento); text-decoration-thickness: .06em; text-underline-offset: .12em; }
+  .fin-cifra-texto { max-width: 14rem; font-size: 1.15rem; font-weight: 700; line-height: 1.35; }
+  .fin-pasos { position: relative; display: grid; gap: 2rem; }
+  .fin-pasos::before { content: ""; position: absolute; left: 1.45rem; top: 1rem; bottom: 1rem; width: 2px; background: color-mix(in srgb, #fff 28%, transparent); }
+  .fin-paso { position: relative; display: flex; gap: 1.25rem; align-items: flex-start; }
+  .fin-paso-num { display: grid; place-items: center; flex: none; width: 2.9rem; height: 2.9rem; border-radius: .85rem; background: #fff; color: var(--c-primario); font-family: var(--fuente-titulos); font-weight: 800; font-size: 1.2rem; }
+  .fin-ventajas { display: grid; gap: 1px; margin-top: clamp(3rem, 6vw, 5rem); border-radius: var(--radio); overflow: hidden; background: color-mix(in srgb, #fff 22%, transparent); }
+  .fin-ventaja { padding: 1.75rem 1.5rem; background: color-mix(in srgb, var(--c-primario) 88%, #000); }
+  @media (min-width: 640px) { .fin-ventajas { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 1024px) {
+    .fin-fila { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: clamp(3rem, 7vw, 7rem); align-items: center; }
+    .fin-fila--sin-pasos { grid-template-columns: minmax(0, 1fr); }
+    .fin-ventajas { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  }
+</style>

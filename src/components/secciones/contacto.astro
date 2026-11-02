@@ -1,0 +1,107 @@
+---
+// Contacto: banda blanca partida. A la izquierda, un panel azul noche a sangre hasta el borde izquierdo con el
+// horario en grande (`horario` {dia, horas}; sin lista, `contacto.horario`). A la derecha, titular, texto, datos con
+// icono (dirección con mapa, teléfono, WhatsApp, email), la foto de la fachada (`imagen`) con esquinas de 1 rem y
+// el botón «Cómo llegar», y, si la sección `cita` no está activa, el formulario de contacto.
+import { seccion, site, tel, mapa, whatsapp } from '../../data/site';
+import { altSeccion } from '../../lib/seo';
+import Seccion from '../ui/Seccion.astro';
+import Titular from '../ui/Titular.astro';
+import Imagen from '../ui/Imagen.astro';
+import Icono from '../ui/Icono.astro';
+import FormularioContacto from '../ui/FormularioContacto.astro';
+interface Props { id: string }
+const s = seccion(Astro.props.id);
+const c = site.contacto;
+const horario = s ? s.horario.filter((h) => h?.dia || h?.horas) : [];
+const conFormulario = !seccion('cita');
+const datos = [
+  c.direccion && { icono: 'mapa', texto: c.direccion, url: mapa(c.direccion), externo: true },
+  c.telefono && { icono: 'telefono', texto: c.telefono, url: tel(c.telefono), externo: false },
+  c.whatsapp && { icono: 'whatsapp', texto: c.whatsapp, url: whatsapp(c.whatsapp), externo: true },
+  c.email && { icono: 'correo', texto: c.email, url: `mailto:${c.email}`, externo: false },
+].filter(Boolean) as { icono: string; texto: string; url: string; externo: boolean }[];
+const conHorario = horario.length > 0 || !!c.horario;
+---
+
+{
+  s && (
+    <Seccion id={Astro.props.id} tono="claro" contenedor={false}>
+      <div class:list={['contacto-fila', { 'contacto-fila--sin-horario': !conHorario }]}>
+        {conHorario && (
+          <div class="contacto-horario">
+            <div class="contacto-horario-in">
+              <p class="antetitulo">Horario</p>
+              {horario.length > 0 ? (
+                <dl class="mt-8 grid gap-7">
+                  {horario.map((h) => (
+                    <div>
+                      <dt class="text-sm font-extrabold tracking-[.14em] uppercase opacity-80">{h.dia}</dt>
+                      <dd class="contacto-horas">{h.horas}</dd>
+                    </div>
+                  ))}
+                </dl>
+              ) : (
+                <p class="contacto-horas mt-8">{c.horario}</p>
+              )}
+            </div>
+          </div>
+        )}
+        <div class="contacto-cuerpo">
+          <Titular antetitulo={s.antetitulo} titulo={s.titulo} texto={s.texto} class="!mb-0" />
+          {datos.length > 0 && (
+            <ul class="contacto-datos">
+              {datos.map((x) => (
+                <li>
+                  <a href={x.url} rel={x.externo ? 'noopener' : undefined} target={x.externo ? '_blank' : undefined} class="contacto-dato">
+                    <span class="icono-caja"><Icono nombre={x.icono} tam={20} /></span>
+                    <span class="min-w-0 break-words">{x.texto}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )}
+          {s.imagen && (
+            <div class="contacto-foto">
+              <Imagen src={s.imagen} alt={altSeccion(s)} ancho={1200} alto={675} class="h-full w-full object-cover" />
+              {c.direccion && (
+                <a href={mapa(c.direccion)} rel="noopener" target="_blank" class="btn contacto-llegar">
+                  <Icono nombre="mapa" tam={18} /> Cómo llegar
+                </a>
+              )}
+            </div>
+          )}
+          {conFormulario && (
+            <div class="mt-10 rounded-2xl bg-[var(--cielo)] p-5 md:p-8">
+              <FormularioContacto boton="Enviar mensaje" />
+            </div>
+          )}
+        </div>
+      </div>
+    </Seccion>
+  )
+}
+
+<style>
+  .contacto-fila { display: grid; grid-template-columns: minmax(0, 1fr); gap: 3rem; }
+  .contacto-horario { margin-top: calc(-1 * var(--pad)); background: var(--c-primario); color: #fff; }
+  .contacto-horario-in { padding: 3.5rem 1rem; }
+  .contacto-horario .antetitulo { color: #fff; }
+  .contacto-horas { margin-top: .35rem; font-family: var(--fuente-titulos); font-size: clamp(1.7rem, 3.4vw, 2.75rem); font-weight: 800; line-height: 1.12; letter-spacing: -0.02em; }
+  .contacto-cuerpo { padding-inline: 1rem; }
+  .contacto-datos { display: grid; gap: .9rem; margin-top: 2.25rem; }
+  .contacto-dato { display: flex; align-items: center; gap: 1rem; min-height: 2.75rem; font-weight: 650; text-decoration: none; }
+  .contacto-dato:hover { color: var(--c-primario); }
+  .contacto-foto { position: relative; overflow: hidden; margin-top: 2.5rem; aspect-ratio: 16 / 9; border-radius: var(--radio); }
+  .contacto-llegar { position: absolute; left: 1rem; bottom: 1rem; }
+  @media (min-width: 768px) {
+    .contacto-horario-in, .contacto-cuerpo { padding-inline: 2rem; }
+  }
+  @media (min-width: 1024px) {
+    .contacto-fila:not(.contacto-fila--sin-horario) { grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: clamp(3rem, 6vw, 6rem); }
+    .contacto-horario { margin-bottom: calc(-1 * var(--pad)); display: flex; align-items: center; }
+    .contacto-horario-in { width: 100%; padding: var(--pad) clamp(2rem, 4vw, 4rem) var(--pad) max(2rem, calc((100vw - var(--ancho)) / 2 + 2rem)); }
+    .contacto-fila:not(.contacto-fila--sin-horario) .contacto-cuerpo { padding-left: 0; padding-right: max(2rem, calc((100vw - var(--ancho)) / 2 + 2rem)); }
+    .contacto-fila--sin-horario .contacto-cuerpo { width: 100%; max-width: var(--ancho); margin-inline: auto; }
+  }
+</style>

@@ -1,0 +1,175 @@
+# Contenido de la web. Es lo único que rellena la plataforma NoExpertise.
+# Las secciones se muestran en el orden de este fichero. Para ocultar una: activa: false.
+# Apartado nuevo: un id propio (es su ancla, /#id) con `tipo:` = el diseño de otra sección o `texto`.
+nombre: Clínica Dental Aguamarina
+eslogan: Odontología general, estética, ortodoncia e implantes en el centro de Almería.
+sector: dentista
+logo: ""          # ruta a una imagen en public/ (p. ej. /logo.svg). Vacío = diente en cuadrado azul y nombre en texto.
+colores:
+  primario: "#1a74c4"
+  acento: "#5fd3b5"
+  fondo: "#ffffff"
+  texto: "#0f2a3d"
+contacto:
+  telefono: "950 48 62 17"
+  email: citas@clinicaaguamarina.es
+  direccion: Calle Javier Sanz 14, 04004 Almería (Almería)
+  horario: "Lunes a jueves, de 9:00 a 14:00 y de 16:00 a 20:30. Viernes, de 9:00 a 15:00."
+  whatsapp: "+34 655 21 48 90"
+redes:
+  instagram: https://www.instagram.com/
+  facebook: https://www.facebook.com/
+  linkedin: ""
+menu:
+  - { texto: Tratamientos, url: "/#tratamientos" }
+  - { texto: Financiación, url: "/#financiacion" }
+  - { texto: Equipo, url: "/#equipo" }
+  - { texto: Tecnología, url: "/#tecnologia" }
+  - { texto: Preguntas, url: "/#preguntas" }
+  - { texto: Contacto, url: "/#contacto" }
+boton_cabecera: { texto: Pedir cita, url: "/#cita" }
+seo:
+  titulo: Clínica Dental Aguamarina · Dentista en Almería
+  descripcion: "Clínica dental en el centro de Almería: revisiones, blanqueamiento, ortodoncia invisible e implantes. Primera visita gratis y financiación sin intereses."
+  tipo: Dentist
+marca_pie: true
+
+secciones:
+  hero:
+    activa: true
+    antetitulo: Clínica dental en Almería
+    titulo: Una boca sana se nota en tu sonrisa.
+    texto: "Revisiones, estética, ortodoncia e implantes con tiempo para explicarte cada paso. Sin prisas, sin sorpresas en el presupuesto y con la luz del centro de Almería."
+    imagen: /fotos/hero.jpg
+    cta: { texto: Pedir cita, url: "/#cita" }
+    cta_secundario: { texto: Ver tratamientos, url: "/#tratamientos" }
+    items:   # garantías, en fila bajo los botones
+      - { titulo: Presupuesto cerrado por escrito, icono: escudo }
+      - { titulo: Financiación sin intereses, icono: porcentaje }
+      - { titulo: Urgencias en el día, icono: reloj }
+    destacado: { titulo: Primera visita gratis, texto: "Revisión, fotos y plan de tratamiento sin compromiso." }
+
+  tratamientos:
+    activa: true
+    antetitulo: Tratamientos
+    titulo: Todo lo que tu boca necesita, en un mismo sitio
+    texto: "Precios orientativos con IVA incluido. Antes de empezar te damos el presupuesto cerrado y por escrito, sin letra pequeña."
+    tratamientos:   # se agrupan por `categoria` en el orden en que aparecen
+      - { nombre: Revisión y diagnóstico, texto: "Exploración completa, fotos y radiografía si hace falta. Te explicamos lo que vemos.", precio: Gratis, duracion: 30 min, categoria: Prevención, icono: diente }
+      - { nombre: Limpieza dental, texto: "Limpieza con ultrasonidos y pulido para quitar sarro y manchas.", precio: "desde 45 €", duracion: 40 min, categoria: Prevención, icono: cepillo }
+      - { nombre: Odontopediatría, texto: "Primeras visitas, selladores y flúor para los más pequeños, con calma y en su idioma.", precio: "desde 30 €", duracion: 30 min, categoria: Prevención, icono: nino }
+      - { nombre: Blanqueamiento, texto: "Blanqueamiento en clínica con luz fría y férulas para mantenerlo en casa.", precio: "desde 290 €", duracion: 90 min, categoria: Estética, icono: chispa }
+      - { nombre: Carillas, texto: "Carillas de composite o porcelana para cambiar forma y color.", precio: "desde 350 € por pieza", duracion: 2 sesiones, categoria: Estética, icono: diente }
+      - { nombre: Empastes estéticos, texto: "Resinas del color de tu diente, sin metal.", precio: "desde 50 €", duracion: 45 min, categoria: Estética, icono: chispa }
+      - { nombre: Alineadores transparentes, texto: "Ortodoncia invisible con escáner 3D: ves el resultado antes de empezar.", precio: "desde 89 €/mes", duracion: 6 a 18 meses, categoria: Ortodoncia, icono: escaner }
+      - { nombre: Brackets estéticos, texto: "Brackets de zafiro o cerámica que apenas se ven.", precio: "desde 59 €/mes", duracion: 12 a 24 meses, categoria: Ortodoncia, icono: brackets }
+      - { nombre: Ortodoncia infantil, texto: "Aparatos para guiar el crecimiento de la boca entre los 6 y los 12 años.", precio: Consultar, duracion: Según el caso, categoria: Ortodoncia, icono: nino }
+      - { nombre: Implante dental, texto: "Implante de titanio con corona, con cirugía guiada y anestesia local.", precio: "desde 690 €", duracion: 3 a 6 meses, categoria: Implantes y cirugía, icono: implante }
+      - { nombre: Endodoncia, texto: "Tratamiento de conductos con microscopio para salvar el diente.", precio: "desde 180 €", duracion: 60 a 90 min, categoria: Implantes y cirugía, icono: microscopio }
+      - { nombre: Prótesis, texto: "Prótesis fijas y removibles hechas a medida en laboratorio de Almería.", precio: "desde 450 €", duracion: 3 a 4 sesiones, categoria: Implantes y cirugía, icono: sillon }
+
+  financiacion:
+    activa: true
+    antetitulo: Financiación
+    titulo: Paga tu tratamiento poco a poco
+    texto: "Tu salud no debería esperar a final de mes. Repartimos el pago en cuotas cómodas y te decimos el importe exacto desde el primer día."
+    destacado: { titulo: "0 %", texto: "de interés en tratamientos de hasta 12 meses" }
+    cta: { texto: Calcula tu cuota en consulta, url: "/#cita" }
+    items:   # categoria «Paso» = pasos numerados; «Ventaja» = ventajas con icono
+      - { titulo: Te damos el presupuesto, texto: "Cerrado y por escrito, con todas las sesiones incluidas.", icono: escudo, categoria: Paso }
+      - { titulo: Eliges las cuotas, texto: "De 3 a 24 meses, según el tratamiento.", icono: calendario, categoria: Paso }
+      - { titulo: Empiezas cuando quieras, texto: "La respuesta llega en el día, sin papeleo en el banco.", icono: check, categoria: Paso }
+      - { titulo: Sin intereses, texto: "En tratamientos de hasta 12 meses.", icono: porcentaje, categoria: Ventaja }
+      - { titulo: Sin cambiar de banco, texto: "Solo necesitas tu DNI y una cuenta.", icono: tarjeta, categoria: Ventaja }
+      - { titulo: Precio cerrado, texto: "Lo que firmas es lo que pagas.", icono: euro, categoria: Ventaja }
+      - { titulo: Para toda la familia, texto: "Puedes juntar los tratamientos de casa en un solo plan.", icono: usuarios, categoria: Ventaja }
+
+  equipo:
+    activa: true
+    antetitulo: Equipo
+    titulo: Las personas que cuidan de tu sonrisa
+    texto: "Odontólogas y odontólogos colegiados, cada uno en lo suyo, y un equipo de higienistas que te conoce por tu nombre."
+    personas:
+      - { nombre: Carmen Ibáñez Rull, cargo: Directora médica, foto: /placeholders/persona.svg, texto: "Implantología y prótesis" }
+      - { nombre: Álvaro Góngora Sáez, cargo: Ortodoncista, foto: /placeholders/persona.svg, texto: "Alineadores y ortodoncia infantil" }
+      - { nombre: Lucía Martos Cano, cargo: Odontopediatra, foto: /placeholders/persona.svg, texto: "Niños y pacientes con miedo al dentista" }
+      - { nombre: Rocío Fenoy Salas, cargo: Higienista dental, foto: /placeholders/persona.svg, texto: "Limpiezas y prevención" }
+
+  tecnologia:
+    activa: true
+    antetitulo: Tecnología
+    titulo: Diagnóstico preciso, tratamientos más cómodos
+    texto: "Medimos tu boca en 3D, vemos los conductos con aumento y esterilizamos cada instrumento con registro. Menos sesiones, menos molestias y resultados que duran."
+    imagen: /fotos/tecnologia.jpg
+    items:
+      - { titulo: Escáner intraoral 3D, texto: "Adiós a las pastas de molde: medimos tu boca en dos minutos.", icono: escaner }
+      - { titulo: Radiografía digital, texto: "Hasta un 80 % menos de radiación y la imagen al momento.", icono: rayosx }
+      - { titulo: Microscopio clínico, texto: "Endodoncias más precisas para salvar el diente.", icono: microscopio }
+      - { titulo: Esterilización registrada, texto: "Cada instrumental, en bolsa sellada y con su control.", icono: escudo }
+    galeria:
+      - /fotos/galeria-1.jpg
+      - /fotos/galeria-2.jpg
+      - /fotos/galeria-3.jpg
+      - /fotos/galeria-4.jpg
+
+  primera-visita:
+    activa: true
+    antetitulo: Primera visita
+    titulo: Tu primera visita, gratis y sin prisas
+    texto: "Una hora para conocerte, revisar tu boca y explicarte con calma qué necesitas y cuánto cuesta. Si decides no tratarte, no pagas nada."
+    imagen: /fotos/primera-visita.jpg
+    items:
+      - { titulo: Revisión completa }
+      - { titulo: Fotos y escáner 3D }
+      - { titulo: Plan de tratamiento por escrito }
+      - { titulo: Presupuesto cerrado }
+    cta: { texto: Reservar mi primera visita, url: "/#cita" }
+    cta_secundario: { texto: Ver preguntas frecuentes, url: "/#preguntas" }
+    nota: "Sin compromiso. Para mayores y niños."
+
+  opiniones:
+    activa: true
+    antetitulo: Opiniones
+    titulo: Lo que cuentan nuestros pacientes
+    testimonios:
+      - { texto: "Llevaba diez años sin ir al dentista por miedo. Me explicaron todo antes de tocar nada y hoy vengo a las revisiones tan tranquila.", autor: "Pilar · paciente desde 2021" }
+      - { texto: "Hice la ortodoncia invisible en catorce meses y pagué en cuotas sin intereses. Nadie notó que la llevaba.", autor: "Javier · alineadores" }
+      - { texto: "Mi hija de seis años sale contenta de la consulta. Eso, con una niña tan nerviosa, lo dice todo.", autor: "Marta · madre de Carla" }
+      - { texto: "El presupuesto del implante fue exactamente lo que pagué. Ni un euro más, y el resultado es estupendo.", autor: "Antonio · implante dental" }
+
+  preguntas:
+    activa: true
+    antetitulo: Preguntas frecuentes
+    titulo: Lo que nos preguntáis antes de venir
+    texto: "¿Tienes otra duda? Llámanos o escríbenos por WhatsApp y te contestamos en el día."
+    preguntas:
+      - { pregunta: ¿La primera visita es de verdad gratis?, respuesta: "Sí. Incluye la revisión, las fotos y el plan de tratamiento con su presupuesto. Si no quieres tratarte con nosotros, no pagas nada." }
+      - { pregunta: ¿Atendéis urgencias?, respuesta: "Sí. Si tienes dolor, una pieza rota o una infección, llámanos y te vemos el mismo día dentro de nuestro horario." }
+      - { pregunta: ¿Cómo funciona la financiación?, respuesta: "Te damos el presupuesto cerrado, eliges el número de cuotas y la respuesta llega en el día. Los tratamientos de hasta 12 meses no tienen intereses." }
+      - { pregunta: ¿A qué edad conviene la primera visita del niño?, respuesta: "Hacia los tres años, o antes si ves manchas o algo que te preocupe. La revisión de ortodoncia, sobre los seis o siete años." }
+      - { pregunta: ¿Duele ponerse un implante?, respuesta: "La cirugía se hace con anestesia local y no duele. Los días siguientes puede haber molestias leves que se controlan con analgésicos normales." }
+
+  cita:
+    activa: true
+    antetitulo: Pedir cita
+    titulo: Pide tu cita en un minuto
+    texto: "Dinos qué necesitas y cuándo te viene bien. Te llamamos para confirmar día y hora, normalmente en el mismo día."
+    imagen: /fotos/cita.jpg
+    opciones: "Primera visita gratis; Revisión y limpieza; Blanqueamiento; Ortodoncia; Implantes; Odontopediatría; Urgencia; Otro"
+    franjas: "Mañana (9 a 14 h); Tarde (16 a 20:30 h); Me da igual"
+    cta: { texto: Prefiero WhatsApp, url: "" }
+    items:
+      - { titulo: Elige el tratamiento }
+      - { titulo: Dinos tu franja }
+      - { titulo: Te confirmamos }
+
+  contacto:
+    activa: true
+    antetitulo: Contacto
+    titulo: Ven a vernos al centro
+    texto: "A cinco minutos del Paseo de Almería. Aparcamiento público a dos calles y parada de autobús en la puerta."
+    imagen: /fotos/contacto.jpg
+    horario:
+      - { dia: Lunes a jueves, horas: "9:00 a 14:00 y 16:00 a 20:30" }
+      - { dia: Viernes, horas: "9:00 a 15:00" }
+      - { dia: Urgencias, horas: "En el día, llamando antes" }

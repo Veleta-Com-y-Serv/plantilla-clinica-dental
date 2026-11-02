@@ -1,0 +1,44 @@
+---
+// Equipo: banda blanca. Titular partido y, debajo, las personas (`personas` {nombre, cargo, foto, texto}) en
+// rejilla de 4 columnas en escritorio (2 en tableta, 1 y media en móvil con desplazamiento lateral): retrato 3:4 con
+// esquinas de 1 rem sobre fondo cielo, nombre, cargo en azul y una línea de especialidad.
+import { seccion } from '../../data/site';
+import Seccion from '../ui/Seccion.astro';
+import Titular from '../ui/Titular.astro';
+import Imagen from '../ui/Imagen.astro';
+interface Props { id: string }
+const s = seccion(Astro.props.id);
+const personas = s ? s.personas.filter((p) => p?.nombre) : [];
+---
+
+{
+  s && (
+    <Seccion id={Astro.props.id} tono="claro">
+      <Titular antetitulo={s.antetitulo} titulo={s.titulo} texto={s.texto} alinear="partido" />
+      {personas.length > 0 && (
+        <ul class="equipo-rejilla">
+          {personas.map((p) => (
+            <li class="equipo-persona">
+              <div class="equipo-foto">
+                <Imagen src={p.foto || '/placeholders/persona.svg'} alt={p.nombre} ancho={600} alto={800} class="h-full w-full object-cover" />
+              </div>
+              <h3 class="mt-5 text-xl font-extrabold">{p.nombre}</h3>
+              {p.cargo && <p class="mt-1 font-bold text-primario">{p.cargo}</p>}
+              {p.texto && <p class="mt-2 text-[.98rem] opacity-75">{p.texto}</p>}
+            </li>
+          ))}
+        </ul>
+      )}
+    </Seccion>
+  )
+}
+
+<style>
+  .equipo-rejilla { display: grid; grid-auto-flow: column; grid-auto-columns: 72%; gap: 1.25rem; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: .75rem; margin-inline: -1rem; padding-inline: 1rem; scroll-padding-inline: 1rem; }
+  .equipo-persona { scroll-snap-align: start; }
+  .equipo-foto { overflow: hidden; aspect-ratio: 3 / 4; border-radius: var(--radio); background: var(--cielo-2); }
+  @media (min-width: 640px) {
+    .equipo-rejilla { grid-auto-flow: row; grid-template-columns: repeat(2, minmax(0, 1fr)); overflow: visible; margin-inline: 0; padding-inline: 0; gap: 2.5rem 1.75rem; }
+  }
+  @media (min-width: 1024px) { .equipo-rejilla { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+</style>

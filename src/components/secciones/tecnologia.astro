@@ -1,0 +1,79 @@
+---
+// Tecnología: banda azul noche. Fila 50/50 con la foto (`imagen`) a sangre hasta el borde izquierdo de la ventana y,
+// a la derecha, titular, texto y el equipamiento (`items` {titulo, texto, icono}) en dos columnas con icono menta.
+// Debajo, la franja de fotos (`galeria`) de borde a borde, sin márgenes. Sin foto, el texto ocupa todo el ancho;
+// sin galería, no hay franja.
+import { seccion, parrafos } from '../../data/site';
+import { altGaleria, altSeccion } from '../../lib/seo';
+import Seccion from '../ui/Seccion.astro';
+import Titular from '../ui/Titular.astro';
+import Imagen from '../ui/Imagen.astro';
+import Icono from '../ui/Icono.astro';
+interface Props { id: string }
+const s = seccion(Astro.props.id);
+const items = s ? s.items.filter((it) => it?.titulo) : [];
+const galeria = s ? s.galeria.filter(Boolean).slice(0, 6) : [];
+---
+
+{
+  s && (
+    <Seccion id={Astro.props.id} tono="noche" contenedor={false} class:list={[{ 'tec--galeria': galeria.length }]}>
+      <div class:list={['tec-fila', { 'tec-fila--sin-foto': !s.imagen }]}>
+        {s.imagen && (
+          <div class="tec-foto">
+            <Imagen src={s.imagen} alt={altSeccion(s)} ancho={1400} alto={1200} class="h-full w-full object-cover" />
+          </div>
+        )}
+        <div class="tec-cuerpo">
+          <Titular antetitulo={s.antetitulo} titulo={s.titulo} class="!mb-0" />
+          {parrafos(s.texto).map((p) => <p class="mt-5 max-w-2xl text-[1.1rem] opacity-80">{p}</p>)}
+          {items.length > 0 && (
+            <ul class="tec-items">
+              {items.map((it) => (
+                <li class="flex gap-4">
+                  <span class="icono-caja"><Icono nombre={it.icono ?? 'check'} tam={22} /></span>
+                  <div>
+                    <h3 class="text-lg font-extrabold">{it.titulo}</h3>
+                    {it.texto && <p class="mt-1 text-[.97rem] opacity-75">{it.texto}</p>}
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+          {s.cta?.url && <a class="btn mt-10" href={s.cta.url}>{s.cta.texto}</a>}
+        </div>
+      </div>
+      {galeria.length > 0 && (
+        <ul class="tec-franja">
+          {galeria.map((g, i) => (
+            <li class="tec-franja-foto">
+              <Imagen src={g} alt={altGaleria(i)} ancho={800} alto={600} class="h-full w-full object-cover" />
+            </li>
+          ))}
+        </ul>
+      )}
+    </Seccion>
+  )
+}
+
+<style>
+  :global(.tec--galeria) { padding-bottom: 0 !important; }
+  .tec-fila { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2.75rem; }
+  .tec-cuerpo { padding-inline: 1rem; }
+  .tec-foto { overflow: hidden; margin-top: calc(-1 * var(--pad)); aspect-ratio: 4 / 3; }
+  .tec-items { display: grid; gap: 1.75rem; margin-top: 2.5rem; }
+  .tec-franja { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: var(--pad); }
+  .tec-franja-foto { overflow: hidden; aspect-ratio: 4 / 3; }
+  @media (min-width: 640px) { .tec-items { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem 2.5rem; } }
+  @media (min-width: 768px) {
+    .tec-cuerpo { width: 100%; max-width: var(--ancho); margin-inline: auto; padding-inline: 2rem; }
+    .tec-franja { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); }
+  }
+  @media (min-width: 1024px) {
+    .tec-fila:not(.tec-fila--sin-foto) { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; gap: clamp(3rem, 6vw, 6rem); }
+    .tec-fila:not(.tec-fila--sin-foto) .tec-cuerpo { max-width: none; padding-left: 0; padding-right: max(2rem, calc((100vw - var(--ancho)) / 2 + 2rem)); }
+    .tec-foto { align-self: stretch; aspect-ratio: auto; min-height: 34rem; margin-bottom: calc(-1 * var(--pad)); border-radius: 0 0 var(--radio) 0; }
+    :global(.tec--galeria) .tec-foto { margin-bottom: 0; }
+    .tec-franja { margin-top: var(--pad); }
+  }
+</style>

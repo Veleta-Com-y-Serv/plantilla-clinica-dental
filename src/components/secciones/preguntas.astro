@@ -1,0 +1,55 @@
+---
+// Preguntas frecuentes: banda de cielo pálido partida. A la izquierda (fija al hacer scroll en escritorio), el
+// titular y los atajos para preguntar (teléfono y WhatsApp de contacto). A la derecha, las preguntas
+// (`preguntas` {pregunta, respuesta}) como acordeón sin JavaScript (<details>), separadas por líneas finas.
+import { seccion, site, tel, whatsapp } from '../../data/site';
+import Seccion from '../ui/Seccion.astro';
+import Titular from '../ui/Titular.astro';
+import Icono from '../ui/Icono.astro';
+interface Props { id: string }
+const s = seccion(Astro.props.id);
+const preguntas = s ? s.preguntas.filter((p) => p?.pregunta) : [];
+const c = site.contacto;
+---
+
+{
+  s && (
+    <Seccion id={Astro.props.id} tono="cielo">
+      <div class="faq-fila">
+        <div class="faq-lado">
+          <Titular antetitulo={s.antetitulo} titulo={s.titulo} texto={s.texto} class="!mb-0" />
+          {(c.telefono || c.whatsapp) && (
+            <div class="mt-8 flex flex-wrap gap-3">
+              {c.telefono && <a class="btn" href={tel(c.telefono)}><Icono nombre="telefono" tam={18} /> {c.telefono}</a>}
+              {c.whatsapp && <a class="btn-sec" href={whatsapp(c.whatsapp)} rel="noopener" target="_blank"><Icono nombre="whatsapp" tam={20} /> WhatsApp</a>}
+            </div>
+          )}
+        </div>
+        {preguntas.length > 0 && (
+          <div class="faq-lista">
+            {preguntas.map((p, i) => (
+              <details class="faq" open={i === 0}>
+                <summary class="flex min-h-11 items-center justify-between gap-6 py-6">
+                  <span class="text-[1.15rem] leading-snug font-extrabold md:text-xl">{p.pregunta}</span>
+                  <span class="faq-signo grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-primario text-white" aria-hidden="true">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 2v12M2 8h12" /></svg>
+                  </span>
+                </summary>
+                {p.respuesta && <p class="-mt-1 max-w-3xl pb-7 pr-14 opacity-80">{p.respuesta}</p>}
+              </details>
+            ))}
+          </div>
+        )}
+      </div>
+    </Seccion>
+  )
+}
+
+<style>
+  .faq-fila { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2.5rem; }
+  .faq-lista { border-top: 1px solid var(--linea); }
+  @media (min-width: 1024px) {
+    .faq-fila { grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr); gap: clamp(3rem, 7vw, 7rem); align-items: start; }
+    .faq-lado { position: sticky; top: 7rem; }
+  }
+</style>
