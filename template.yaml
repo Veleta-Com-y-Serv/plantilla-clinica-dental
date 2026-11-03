@@ -21,7 +21,7 @@ secciones:
   - { id: contacto, nombre: Contacto }
 estilo: limpio
 plan_minimo: presencia
-version: 1.1.0
+version: 1.2.0
 base: astrowind
 demo_url: https://demo-plantilla-clinica-dental.noexpertise.com
 activa: true
@@ -31,6 +31,13 @@ orden: 490
 # Cada tratamiento con `detalle` tiene su página en /tratamientos/<slug>/.
 fichas:
   - { lista: tratamientos, campo: tratamientos, ruta: tratamientos, nombre: Tratamiento, tipo: Service }
+
+# Varias páginas (docs/plantillas.md § Varias páginas): reparto recomendado al activar «Varias páginas».
+# Inicio se queda con la portada y lo que no esté en ninguna página (aquí, opiniones).
+paginas:
+  - { ruta: tratamientos, titulo: Tratamientos, secciones: "tratamientos; financiacion; tecnologia" }
+  - { ruta: la-clinica, titulo: La clínica, secciones: "equipo; primera-visita" }
+  - { ruta: pide-cita, titulo: Pide cita, secciones: "preguntas; cita; contacto" }
 
 # Asistente de puesta en marcha (NoExpertise): un paso por pantalla. Rutas del site sin índices;
 # tipos: texto y lista (la IA propone), datos, fotos, eleccion (colores y logo) y repaso.
